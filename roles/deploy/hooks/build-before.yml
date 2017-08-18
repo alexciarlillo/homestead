@@ -1,0 +1,66 @@
+# Placeholder `deploy_build_before` hook for building theme assets locally
+# and then copying the files to the remote server
+---
+- name: Create temp build directory
+  connection: local
+  tempfile:
+    state: directory
+    suffix: "-{{site}}-{{project.branch}}"
+  register: local_build
+
+- name: Clone project for local build
+  connection: local
+  git:
+    repo: "{{ project.repo }}"
+    dest: "{{ local_build.path }}"
+    version: "{{ project.branch }}"
+    accept_hostkey: "{{ repo_accept_hostkey | default(true) }}"
+  ignore_errors: false
+  no_log: false
+  register: git_clone
+
+- name: Install composer deps for local build
+  connection: local
+  command: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --no-scripts
+  args:
+    chdir: "{{ local_build.path }}"
+
+- name: Check for package.json
+  connection: local
+  stat:
+    path: "{{ local_build.path }}/package.json"
+  register: npm
+
+- name: Check for Yarn lock file
+  connection: local
+  stat:
+    path: "{{ local_build.path }}/yarn.lock"
+  register: yarn
+
+- name: Install npm dependencies
+  connection: local
+  command: npm install
+  args:
+    chdir: "{{local_build.path}}"
+  when: npm.stat.exists and not yarn.stat.exists
+
+- name: Install npm dependencies with yarn
+  connection: local
+  command: yarn install
+  args:
+    chdir: "{{local_build.path}}"
+  when: npm.stat.exists and yarn.stat.exists
+
+- name: Build with Webpack [non-prod]
+  command: yarn run build
+  connection: local
+  args:
+    chdir: "{{ local_build.path }}"
+  when: yarn.stat.exists and (not env == "production")
+
+- name: Build with Webpack [Production]
+  command: yarn run build:production
+  connection: local
+  args:
+    chdir: "{{ local_build.path }}"
+  when: yarn.stat.exists and env == "production"

@@ -1,0 +1,57 @@
+---
+- include: "{{ include_path }}"
+  with_items: "{{ deploy_build_before | default([]) }}"
+  loop_control:
+    loop_var: include_path
+  tags: deploy-build-before
+
+- name: Copy project templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ deploy_helper.new_release_path }}/{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items: "{{ project_templates }}"
+  become: true
+  become_flags: '-iS'
+
+- name: Check if project folders exist
+  stat:
+    path: "{{ deploy_helper.current_path }}/{{ item }}"
+  register: project_folder_paths
+  with_items: "{{ project_copy_folders }}"
+  become: true
+  become_flags: '-iS'
+
+- name: Copy project folders
+  command: cp -rp {{ deploy_helper.current_path }}/{{ item.item }} {{ deploy_helper.new_release_path }}
+  with_items: "{{ project_folder_paths.results }}"
+  when: item.stat.exists
+  become: true
+  become_flags: '-iS'
+
+- name: Check for composer.json in project root or project_subtree_path
+  stat:
+    path: "{{ deploy_helper.new_release_path }}/composer.json"
+  register: composer_json
+  become: true
+  become_flags: '-iS'
+
+- name: Fail if composer.json not found
+  fail:
+    msg: "Unable to find a `composer.json` file in the root of '{{ deploy_helper.new_release_path }}'. Make sure your repo has a `composer.json` file in its root or edit `repo_subtree_path` for '{{ site }}' in `wordpress_sites.yml` so it points to the directory with a `composer.json` file."
+  when: not composer_json.stat.exists
+
+- name: Install Composer dependencies
+  command: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+  become: true
+  become_flags: '-iS'
+
+# - name: Ensure directories are 0775
+#   command: find {{ deploy_helper.new_release_path }} -type d -exec chmod 0775 {} \;
+#   become: true
+#
+# - name: Ensure files are 0664
+#   command: find {{ deploy_helper.new_release_path }} -type f -exec chmod 0664 {} \;
+#   become: true

@@ -1,0 +1,11 @@
+laravel_sites:
+  app-example:
+    site_host: www.example.com
+    local_path: "{{ sites_root }}/app-example"
+    repo: 
+    branch: staging
+    env:
+      APP_ENV: staging
+      APP_DEBUG: true
+      APP_LOG_LEVEL: debug
+      APP_URL: https://www.example.com/app

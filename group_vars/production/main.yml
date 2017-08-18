@@ -1,0 +1,2 @@
+www_root: /var/www/sites
+data_root: /var/www/data
