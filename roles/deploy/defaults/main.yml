@@ -31,10 +31,10 @@ project_templates:
 #     mode: '0755'        // <- optional, must be quoted, defaults to `'0755'` if `directory` or `'0644'` if `file`
 #     type: directory     // <- optional, defaults to `directory`, options: `directory` or `file`
 project_shared_children:
-  - path: storage
-    src: storage
-    mode: '2775'
-    type: directory
+#  - path: storage
+#    src: storage
+#    mode: '2775'
+#    type: directory
 
 # The project_current_path is the symlink used for the latest or active deployment
 # - default is 'current'

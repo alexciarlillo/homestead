@@ -17,5 +17,6 @@ laravel_sites:
       MAIL_DRIVER: smtp
       MAIL_HOST: smtp.mailtrap.io
       MAIL_PORT: 2525
+      QUEUE_DRIVER: redis
 
 

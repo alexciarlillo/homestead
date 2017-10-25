@@ -12,3 +12,5 @@ known_hosts:
 # Whether to automatically accept the host key for your `repo` (in `wordpress_sites`) during git clone.
 # To avoid man-in-the-middle attacks, set this to `false` and add repo host key to `known_hosts` above.
 repo_accept_hostkey: false
+
+dynamic_host_key_algorithms: false

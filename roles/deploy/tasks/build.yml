@@ -11,8 +11,6 @@
     dest: "{{ deploy_helper.new_release_path }}/{{ item.dest }}"
     mode: "{{ item.mode | default('0644') }}"
   with_items: "{{ project_templates }}"
-  become: true
-  become_flags: '-iS'
 
 - name: Check if project folders exist
   stat:

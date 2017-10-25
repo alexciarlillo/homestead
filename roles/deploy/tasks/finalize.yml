@@ -9,6 +9,15 @@
   args:
     chdir: "{{ deploy_helper.new_release_path }}"
 
+- name: Change group ownership of storage
+  file:
+    path: "{{ deploy_helper.new_release_path }}/storage"
+    group: www-data
+    mode: 0755
+  become: true
+  become_user: root
+  become_method: sudo
+
 - name: Finalize the deploy
   deploy_helper:
     current_path: "{{ project_current_path }}"
