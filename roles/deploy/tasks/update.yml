@@ -6,8 +6,6 @@
     path: "{{ item.path | default(omit) }}"
     state: "{{ item.state | default('present') }}"
   with_items: "{{ known_hosts | default([]) }}"
-  become: true
-  become_flags: '-iS'
 
 - name: Check whether project source path is a git repo
   stat:
@@ -37,8 +35,6 @@
   ignore_errors: true
   no_log: true
   register: git_clone
-  become: true
-  become_flags: '-iS'
 
 - name: Failed connection to remote repo
   fail:

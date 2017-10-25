@@ -10,18 +10,15 @@
   when: not composer_json.stat.exists
 
 - name: Install Composer dependencies
-  command: /opt/rh/rh-php70/root/usr/bin/php $HOME/bin/composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader
+  command: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader
   args:
     chdir: "{{ deploy_helper.new_release_path }}"
-  become: true
 
 - name: Ensure directories are 0775
   command: find {{ deploy_helper.new_release_path }} -type d -exec chmod 0775 {} \;
-  become: true
 
 - name: Ensure files are 0664
   command: find {{ deploy_helper.new_release_path }} -type f -exec chmod 0664 {} \;
-  become: true
 
 - name: Create remote tmp build directory
   tempfile:
@@ -50,7 +47,6 @@
     owner: no
     rsync_opts: --chmod=Du=rwx,--chmod=Dg=rwx,--chmod=Do=rx,--chmod=Fu=rw,--chmod=Fg=rw,--chmod=Fo=r
   delegate_to: "{{ inventory_hostname }}"
-  become: true
 
 - name: Cleanup remote tmp build files
   file:

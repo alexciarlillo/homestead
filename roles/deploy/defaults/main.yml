@@ -43,8 +43,7 @@ project_current_path: "{{ project.current_path | default('current') }}"
 # Helpers
 project: "{{ laravel_sites[site] }}"
 host: "{{ project.site_host }}"
-project_root: "{{ www_root }}/{{ host }}/apps/{{ site }}"
-project_data: "{{ data_root }}/{{ host }}/apps/{{ site }}"
+project_root: "{{ www_root }}/{{ site }}"
 
 # deploy_build_before:
 #   - "{{ playbook_dir }}/roles/deploy/hooks/build-before.yml"

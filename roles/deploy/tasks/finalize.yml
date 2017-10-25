@@ -3,15 +3,11 @@
   command: php artisan optimize
   args:
     chdir: "{{ deploy_helper.new_release_path }}"
-  become: true
-  become_flags: '-iS'
 
 - name: Create config cache
   command: php artisan config:cache
   args:
     chdir: "{{ deploy_helper.new_release_path }}"
-  become: true
-  become_flags: '-iS'
 
 - name: Finalize the deploy
   deploy_helper:
@@ -19,8 +15,6 @@
     path: "{{ project_root }}"
     release: "{{ deploy_helper.new_release }}"
     state: finalize
-  become: true
-  become_flags: '-iS'
 
 - debug:
     msg: "{{ project_version }}@{{ git_clone.after | truncate(7, True, '') }} deployed as release {{ deploy_helper.new_release }}"

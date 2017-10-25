@@ -37,13 +37,6 @@
     path: "{{ local_build.path }}/yarn.lock"
   register: yarn
 
-- name: Install npm dependencies
-  connection: local
-  command: npm install
-  args:
-    chdir: "{{local_build.path}}"
-  when: npm.stat.exists and not yarn.stat.exists
-
 - name: Install npm dependencies with yarn
   connection: local
   command: yarn install

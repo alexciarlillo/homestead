@@ -1,11 +1,11 @@
 laravel_sites:
-  app-example:
-    site_host: www.example.com
-    local_path: "{{ sites_root }}/app-example"
-    repo: 
-    branch: staging
+  gr-test-project:
+    site_host: alexciarlillo.com
+    local_path: "{{ sites_root }}/gr-test-project"
+    repo: git@github.com:alexciarlillo/gr-test-project.git
+    branch: master
     env:
       APP_ENV: staging
       APP_DEBUG: true
       APP_LOG_LEVEL: debug
-      APP_URL: https://www.example.com/app
+      APP_URL: https://alexciarlillo.com/gr-test

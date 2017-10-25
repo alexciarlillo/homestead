@@ -2,7 +2,7 @@
 # List each machine only once per [group], even if it will host multiple sites.
 
 [staging]
-staging ansible_become_user=webuser
+fiddlers-green
 
 [web]
-staging ansible_become_user=webuser
+fiddlers-green

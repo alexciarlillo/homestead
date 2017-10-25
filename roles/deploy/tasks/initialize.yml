@@ -4,13 +4,9 @@
     current_path: "{{ project_current_path }}"
     path: "{{ project_root }}"
     state: query
-  become: true
-  become_flags: '-iS'
 
 - name: Initialize
   deploy_helper:
     current_path: "{{ project_current_path }}"
     path: "{{ project_root }}"
     state: present
-  become: true
-  become_flags: '-iS'
