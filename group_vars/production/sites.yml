@@ -5,17 +5,15 @@ laravel_sites:
     repo: git@github.com:alexciarlillo/gr-test-project.git
     branch: master
     env:
+      APP_NAME: "GR Test Project"
       APP_ENV: staging
       APP_DEBUG: true
       APP_LOG_LEVEL: debug
-      APP_URL: https://alexciarlillo.com/gr
-      DB_CONNECTION: mysql
-      DB_HOST: 127.0.0.1
-      DB_PORT: 3306
-      DB_DATABASE: gr-test
-      DB_USERNAME: gr-test
+      APP_URL: "https://alexciarlillo.com/gr"
+      DB_DATABASE: "gr-test"
+      DB_USERNAME: "gr-test"
       MAIL_DRIVER: smtp
-      MAIL_HOST: smtp.mailtrap.io
+      MAIL_HOST: "smtp.mailtrap.io"
       MAIL_PORT: 2525
       QUEUE_DRIVER: redis
 

@@ -9,6 +9,16 @@
   args:
     chdir: "{{ deploy_helper.new_release_path }}"
 
+- name: Migrate the database
+  command: php artisan migrate
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Seed the database
+  command: php artisan db:seed
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
 - name: Change group ownership of storage
   file:
     path: "{{ deploy_helper.new_release_path }}/storage"
