@@ -33,7 +33,7 @@
 
 - name: Copy project assets to remote tmp
   synchronize:
-    src: "{{ local_build.path }}/dist"
+    src: "{{ local_build.path }}/public"
     dest: "{{ remote_build.path }}"
     group: no
     owner: no
@@ -41,7 +41,7 @@
 
 - name: Copy project assets from tmp to project directory
   synchronize:
-    src: "{{ remote_build.path }}/dist"
+    src: "{{ remote_build.path }}/public"
     dest: "{{ deploy_helper.new_release_path }}"
     group: no
     owner: no

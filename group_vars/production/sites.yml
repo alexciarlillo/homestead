@@ -16,5 +16,23 @@ laravel_sites:
       MAIL_HOST: "smtp.mailtrap.io"
       MAIL_PORT: 2525
       QUEUE_DRIVER: redis
-
+  steam-sheet:
+    site_host: alexciarlillo.com
+    local_path: "{{ sites_root }}/steam-sheet"
+    repo: git@github.com:alexciarlillo/steam-sheet.git
+    branch: master
+    env:
+      APP_NAME: "Steam Sheet"
+      APP_ENV: production
+      APP_DEBUG: true
+      APP_LOG_LEVEL: debug
+      APP_URL: "https://steamsheet.alexciarlillo.com"
+      DB_DATABASE: "steam-sheet"
+      DB_USERNAME: "steam-sheet"
+      MAIL_DRIVER: smtp
+      MAIL_HOST: "smtp.mailtrap.io"
+      MAIL_PORT: 2525
+      QUEUE_DRIVER: redis
+      STEAM_REDIRECT_URI: "https://steam-sheet.alexciarlillo.com/login"
+      
 

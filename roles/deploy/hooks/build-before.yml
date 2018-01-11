@@ -45,14 +45,14 @@
   when: npm.stat.exists and yarn.stat.exists
 
 - name: Build with Webpack [non-prod]
-  command: yarn run build
+  command: yarn dev
   connection: local
   args:
     chdir: "{{ local_build.path }}"
   when: yarn.stat.exists and (not env == "production")
 
 - name: Build with Webpack [Production]
-  command: yarn run build:production
+  command: yarn prod
   connection: local
   args:
     chdir: "{{ local_build.path }}"
