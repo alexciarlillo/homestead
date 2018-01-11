@@ -1,21 +1,4 @@
 laravel_sites:
-  gr-test-project:
-    site_host: alexciarlillo.com
-    local_path: "{{ sites_root }}/gr-test-project"
-    repo: git@github.com:alexciarlillo/gr-test-project.git
-    branch: master
-    env:
-      APP_NAME: "GR Test Project"
-      APP_ENV: staging
-      APP_DEBUG: true
-      APP_LOG_LEVEL: debug
-      APP_URL: "https://alexciarlillo.com/gr"
-      DB_DATABASE: "gr-test"
-      DB_USERNAME: "gr-test"
-      MAIL_DRIVER: smtp
-      MAIL_HOST: "smtp.mailtrap.io"
-      MAIL_PORT: 2525
-      QUEUE_DRIVER: redis
   steam-sheet:
     site_host: alexciarlillo.com
     local_path: "{{ sites_root }}/steam-sheet"
@@ -33,6 +16,6 @@ laravel_sites:
       MAIL_HOST: "smtp.mailtrap.io"
       MAIL_PORT: 2525
       QUEUE_DRIVER: redis
-      STEAM_REDIRECT_URI: "https://steam-sheet.alexciarlillo.com/login"
+      STEAM_REDIRECT_URI: "https://steamsheet.alexciarlillo.com/login"
       
 

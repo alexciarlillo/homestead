@@ -19,12 +19,6 @@
   no_log: false
   register: git_clone
 
-- name: Install composer deps for local build
-  connection: local
-  command: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --no-scripts
-  args:
-    chdir: "{{ local_build.path }}"
-
 - name: Check for package.json
   connection: local
   stat:
