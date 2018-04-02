@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 declare -A params=$6     # Create an associative array
 paramsTXT=""
 if [ -n "$6" ]; then
@@ -28,10 +29,10 @@ block="<VirtualHost *:$3>
     ServerAdmin webmaster@localhost
     ServerName $1
     ServerAlias www.$1
-    DocumentRoot $2
+    DocumentRoot "$2"
     $paramsTXT
 
-    <Directory $2>
+    <Directory "$2">
         AllowOverride All
         Require all granted
     </Directory>
@@ -65,10 +66,10 @@ blockssl="<IfModule mod_ssl.c>
         ServerAdmin webmaster@localhost
         ServerName $1
         ServerAlias www.$1
-        DocumentRoot $2
+        DocumentRoot "$2"
         $paramsTXT
 
-        <Directory $2>
+        <Directory "$2">
             AllowOverride All
             Require all granted
         </Directory>
@@ -79,8 +80,8 @@ blockssl="<IfModule mod_ssl.c>
         # modules, e.g.
         #LogLevel info ssl:warn
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        ErrorLog \${APACHE_LOG_DIR}/$1-error.log
+        CustomLog \${APACHE_LOG_DIR}/$1-access.log combined
 
         # For most configuration files from conf-available/, which are
         # enabled or disabled at a global level, it is possible to
@@ -164,6 +165,10 @@ ps auxw | grep apache2 | grep -v grep > /dev/null
 
 # Assume user wants mode_rewrite support
 sudo a2enmod rewrite
+
+# Turn on HTTPS support
+sudo a2enmod ssl
+
 service apache2 restart
 
 if [ $? == 0 ]
