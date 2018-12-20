@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 declare -A params=$6     # Create an associative array
+declare -A headers=$9    # Create an associative array
 paramsTXT=""
 if [ -n "$6" ]; then
    for element in "${!params[@]}"
@@ -8,6 +9,23 @@ if [ -n "$6" ]; then
       paramsTXT="${paramsTXT}
       fastcgi_param ${element} ${params[$element]};"
    done
+fi
+headersTXT=""
+if [ -n "$9" ]; then
+   for element in "${!headers[@]}"
+   do
+      headersTXT="${headersTXT}
+      add_header ${element} ${headers[$element]};"
+   done
+fi
+
+if [ "$7" = "true" ] && [ "$5" = "7.2" ]
+then configureZray="
+location /ZendServer {
+        try_files \$uri \$uri/ /ZendServer/index.php?\$args;
+}
+"
+else configureZray=""
 fi
 
 block="server {
@@ -22,7 +40,10 @@ block="server {
 
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
+        $headersTXT
     }
+
+    $configureZray
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
