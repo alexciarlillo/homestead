@@ -393,6 +393,11 @@ class Homestead
             end
         end
 
+        # Bind redis to VM interface
+        config.vm.provision "shell" do |s|
+            s.path = scriptDir + "/install-redis.sh"
+        end
+
         # Add config file for ngrok
         config.vm.provision "shell" do |s|
             s.path = scriptDir + "/create-ngrok.sh"
