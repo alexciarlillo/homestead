@@ -7,12 +7,6 @@ password = secret
 host = localhost
 EOF
 
-cat > /etc/mysql/mysql.conf.d/sa.cnf << EOF
-[mysqld]
-sql_mode = "NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-group_concat_max_len = 1048576
-EOF
-
 cp /root/.my.cnf /home/vagrant/.my.cnf
 
 DB=$1;
